@@ -1,6 +1,6 @@
 "use client";
 
-import { Doughnut, Bar } from 'react-chartjs-2';
+import { Doughnut, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +10,10 @@ import {
   Tooltip,
   Legend,
   ArcElement,
-} from 'chart.js';
+  type ChartData,
+  type ChartOptions,
+  type TooltipItem,
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -23,23 +26,19 @@ ChartJS.register(
 );
 
 export function DonutChart() {
-  const data = {
-    labels: ['Rent & Living', 'Food & Dining', 'Transportation'],
+  const data: ChartData<"doughnut"> = {
+    labels: ["Rent & Living", "Food & Dining", "Transportation"],
     datasets: [
       {
         data: [60, 25, 15],
-        backgroundColor: [
-          '#4caf50', // Primary green
-          '#2196f3', // Blue
-          '#ff9800', // Orange
-        ],
+        backgroundColor: ["#4caf50", "#2196f3", "#ff9800"],
         borderWidth: 0,
-        cutout: '70%',
+        cutout: "70%",
       },
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"doughnut"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -66,27 +65,40 @@ export function DonutChart() {
 }
 
 export function BarChart() {
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  const data: ChartData<"bar"> = {
+    labels: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
     datasets: [
       {
-        label: 'Income',
+        label: "Income",
         data: [4, 5, 6, 5.5, 7, 6, 8, 7.5, 6.5, 8.5, 7, 9],
-        backgroundColor: '#1b5e20', // Dark green
+        backgroundColor: "#1b5e20",
         borderRadius: 4,
         borderSkipped: false,
       },
       {
-        label: 'Expense',
+        label: "Expense",
         data: [3, 4, 3.5, 4.5, 5, 4, 6, 5.5, 4.5, 6.5, 5, 7],
-        backgroundColor: '#c8e6c9', // Light green
+        backgroundColor: "#c8e6c9",
         borderRadius: 4,
         borderSkipped: false,
       },
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -95,19 +107,19 @@ export function BarChart() {
       },
       tooltip: {
         enabled: true,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        titleColor: 'white',
-        bodyColor: 'white',
-        borderColor: '#4caf50',
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        titleColor: "white",
+        bodyColor: "white",
+        borderColor: "#4caf50",
         borderWidth: 1,
         callbacks: {
-          title: function(context: any) {
-            const month = context[0].label;
+          title: (context: TooltipItem<"bar">[]) => {
+            const month = context[0]?.label ?? "";
             return `${month} 2029`;
           },
-          label: function(context: any) {
-            const label = context.dataset.label;
-            const value = context.parsed.y;
+          label: (context: TooltipItem<"bar">) => {
+            const label = context.dataset.label ?? "Amount";
+            const value = typeof context.parsed.y === "number" ? context.parsed.y : 0;
             return `${label} $${value * 1000}`;
           },
         },
@@ -120,7 +132,7 @@ export function BarChart() {
           display: false,
         },
         ticks: {
-          color: '#666666',
+          color: "#666666",
           font: {
             size: 12,
           },
@@ -130,16 +142,14 @@ export function BarChart() {
         display: true,
         grid: {
           display: true,
-          color: '#f0f0f0',
+          color: "#f0f0f0",
         },
         ticks: {
-          color: '#666666',
+          color: "#666666",
           font: {
             size: 12,
           },
-          callback: function(value: any) {
-            return value + 'K';
-          },
+          callback: (value: number | string) => `${value}K`,
         },
         min: -8,
         max: 8,

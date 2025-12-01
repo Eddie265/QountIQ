@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Account, JournalEntry, JournalLine } from "@/types";
 
 export default function JournalPage() {

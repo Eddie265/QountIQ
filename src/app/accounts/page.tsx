@@ -37,7 +37,9 @@ export default function AccountsPage() {
               <div className="border border-[var(--border-color)] rounded-lg p-4">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-8 h-8 bg-[var(--light-green)] rounded-lg flex items-center justify-center">
-                    <span className="text-sm">📋</span>
+                    <svg className="w-4 h-4 text-[var(--primary-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                   </div>
                   <h4 className="font-semibold text-[var(--foreground)]">Liabilities</h4>
                 </div>
@@ -60,7 +62,7 @@ export default function AccountsPage() {
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center p-2 bg-[var(--sidebar-bg)] rounded">
-                    <span>3000 · Owner's Equity</span>
+                    <span>3000 · Owner&apos;s Equity</span>
                     <span className="font-medium">$0.00</span>
                   </div>
                 </div>
@@ -113,7 +115,10 @@ export default function AccountsPage() {
                 </svg>View Trial Balance
               </button>
               <button className="w-full btn-secondary text-left">
-                📋 Export Chart
+                <svg className="w-4 h-4 text-[var(--primary-green)] inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM4.828 7l2.586 2.586a2 2 0 002.828 0L12.828 7H4.828zM4.828 17H12l-2.586-2.586a2 2 0 00-2.828 0L4.828 17z" />
+                </svg>
+                Export Chart
               </button>
               <button className="w-full btn-secondary text-left">
                 <svg className="w-4 h-4 text-[var(--primary-green)] inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
