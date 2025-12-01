@@ -33,7 +33,6 @@ export function DonutChart() {
         data: [60, 25, 15],
         backgroundColor: ["#4caf50", "#2196f3", "#ff9800"],
         borderWidth: 0,
-        cutout: "70%",
       },
     ],
   };
@@ -49,6 +48,7 @@ export function DonutChart() {
         enabled: false,
       },
     },
+    cutout: "70%",
   };
 
   return (
