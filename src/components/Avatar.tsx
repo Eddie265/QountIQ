@@ -1,5 +1,3 @@
-"use client";
-
 interface AvatarProps {
   initials: string;
   className?: string;
@@ -19,4 +17,5 @@ export function Avatar({ initials, className = "", size = 'md' }: AvatarProps) {
     </div>
   );
 }
+
 

@@ -17,3 +17,4 @@ export function ChartProvider({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+

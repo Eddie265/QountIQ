@@ -1,5 +1,3 @@
-"use client";
-
 interface ProgressBarProps {
   value: number;
   max: number;
@@ -24,4 +22,5 @@ export function ProgressBar({ value, max, className = "", showPercentage = true 
     </div>
   );
 }
+
 
