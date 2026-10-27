@@ -1,162 +1,127 @@
 export type UUID = string;
 
-export type AccountType =
-  | "asset"
-  | "liability"
-  | "equity"
-  | "income"
-  | "expense";
+export type TransactionType = "income" | "expense" | "transfer";
+export type TransactionStatus = "completed" | "pending" | "failed";
 
-export interface Account {
-  id: UUID;
-  code: string;
-  name: string;
-  type: AccountType;
+export interface Profile {
+  full_name: string;
+  role: string;
+  email: string;
+  company: string;
+  currency: string;
 }
 
+export interface Customer {
+  id: UUID;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  status: "active" | "inactive";
+  created_at: Date;
+}
+
+export interface CustomerWithStats extends Customer {
+  revenue: number;
+  open_invoices: number;
+  last_activity: Date | null;
+}
+
+export interface Card {
+  id: UUID;
+  holder: string;
+  nickname: string;
+  last4: string;
+  exp_month: number;
+  exp_year: number;
+  balance: number;
+  daily_limit: number;
+  status: "active" | "frozen";
+  is_primary: boolean;
+}
+
+export interface Transaction {
+  id: UUID;
+  title: string;
+  category: string;
+  type: TransactionType;
+  amount: number;
+  status: TransactionStatus;
+  note: string | null;
+  occurred_at: Date;
+  customer_id: UUID | null;
+  customer_name: string | null;
+  card_id: UUID | null;
+  card_last4: string | null;
+}
+
+export type InvoiceStatus = "draft" | "sent" | "paid" | "void";
+
 export interface InvoiceLine {
+  id?: UUID;
   description: string;
   quantity: number;
-  unitPrice: number;
-  accountId: UUID; // income account
+  unit_price: number;
 }
 
 export interface Invoice {
   id: UUID;
   number: string;
-  customer: string;
-  issueDate: string; // ISO
-  dueDate: string; // ISO
-  currency: string;
-  status: "draft" | "sent" | "paid";
+  customer_id: UUID;
+  customer_name: string;
+  customer_email: string;
+  issue_date: string;
+  due_date: string;
+  status: InvoiceStatus;
+  notes: string | null;
+  paid_at: Date | null;
+  total: number;
   lines: InvoiceLine[];
 }
 
-export interface JournalLine {
-  accountId: UUID;
-  debit: number; // positive
-  credit: number; // positive
-  description?: string;
-}
-
-export interface JournalEntry {
-  id: UUID;
-  date: string; // ISO
-  memo?: string;
-  lines: JournalLine[];
-}
-
-export type PaymentStatus = "scheduled" | "approved" | "processing" | "failed";
+export type PaymentStatus = "scheduled" | "completed" | "failed" | "cancelled";
+export type PaymentMethod = "ACH" | "Wire" | "Card" | "Check";
 
 export interface Payment {
   id: UUID;
-  vendor: string;
+  payee: string;
   amount: number;
-  currency: string;
-  date: string;
-  method: "ACH" | "Wire" | "Check" | "Card";
+  method: PaymentMethod;
+  category: string;
   status: PaymentStatus;
-  reference: string;
+  scheduled_for: string;
+  reference: string | null;
+  card_id: UUID | null;
+  card_last4: string | null;
 }
 
-export type FinanceTransactionType = "income" | "expense" | "transfer";
-
-export interface FinanceTransaction {
+export interface Message {
   id: UUID;
-  type: FinanceTransactionType;
-  category: string;
-  description: string;
-  amount: number;
-  currency: string;
-  date: string;
-  account: string;
-}
-
-export interface CorporateCard {
-  id: UUID;
-  holder: string;
-  lastFour: string;
-  limit: number;
-  currentSpend: number;
-  status: "active" | "inactive";
-}
-
-export interface CardTransaction {
-  id: UUID;
-  cardId: UUID;
-  merchant: string;
-  amount: number;
-  date: string;
-  category: string;
-}
-
-export interface SavingsGoal {
-  id: UUID;
-  name: string;
-  target: number;
-  balance: number;
-  dueDate: string;
-}
-
-export interface SavingsContribution {
-  id: UUID;
-  goalId: UUID;
-  source: string;
-  amount: number;
-  date: string;
-}
-
-export interface InvestmentHolding {
-  id: UUID;
-  name: string;
-  assetClass: string;
-  allocation: number;
-  value: number;
-  change: number;
-}
-
-export interface PromoOffer {
-  id: UUID;
-  title: string;
-  description: string;
-  partner: string;
-  expiresOn: string;
-  ctaLabel: string;
-}
-
-export interface InsightItem {
-  id: UUID;
-  title: string;
-  detail: string;
-  impact: "positive" | "neutral" | "negative";
-}
-
-export interface InboxMessage {
-  id: UUID;
+  sender: string;
   subject: string;
-  preview: string;
-  date: string;
-  status: "new" | "read" | "urgent";
+  body: string;
+  is_read: boolean;
+  is_starred: boolean;
+  created_at: Date;
 }
 
-export interface PayrollEmployee {
+export interface Activity {
   id: UUID;
-  name: string;
-  role: string;
-  salary: number;
-  paySchedule: "weekly" | "bi-weekly" | "monthly";
-  status: "active" | "on_leave";
+  actor: string;
+  action: string;
+  created_at: Date;
 }
 
-export interface PayrollRun {
-  id: UUID;
-  periodStart: string;
-  periodEnd: string;
-  payDate: string;
-  netPay: number;
-  status: "processing" | "completed" | "scheduled";
+export interface MonthlyTotals {
+  month: string; // YYYY-MM
+  income: number;
+  expense: number;
 }
 
+export interface CategoryTotal {
+  category: string;
+  total: number;
+}
 
-
-
+/** Shape returned by every server action that a form can display. */
+export type ActionResult = { ok: true; message?: string } | { ok: false; error: string };

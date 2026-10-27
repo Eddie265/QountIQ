@@ -3,8 +3,8 @@
   "short_name": "CountIQ",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1b5e20",
+  "background_color": "#eef0f3",
+  "theme_color": "#5b67f1",
   "icons": [
     {
       "src": "/icon.svg",
